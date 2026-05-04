@@ -1,202 +1,230 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tech Repair Startup Console</title>
-  
-  <!-- Google coding-style font -->
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Tech Repair Startup • Console HUD</title>
   <link href="[fonts.googleapis.com](https://fonts.googleapis.com/css2?family=Fira+Code&display=swap)" rel="stylesheet">
-  
   <style>
     body {
       background-color: #000;
-      color: #0ff;
+      color: #00ffff;
       font-family: 'Fira Code', monospace;
       margin: 0;
-      padding: 20px;
-      line-height: 1.6;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
-
-    h1, h2 {
+    /* Glow + grid background */
+    body::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(90deg, #001011 0 1px, transparent 1px 80px),
+                  repeating-linear-gradient(180deg, #001011 0 1px, transparent 1px 80px);
+      opacity: 0.07;
+      z-index: 0;
+    }
+    h1 {
       color: #00bfff;
-      text-shadow: 0 0 10px #00bfff;
+      text-shadow: 0 0 10px #00bfff, 0 0 20px #0ff;
+      font-size: clamp(22px, 5vw, 48px);
+      text-align: center;
+      z-index: 1;
     }
 
-    .container {
-      max-width: 900px;
-      margin: auto;
+    /* ? Button */
+    #helpBtn {
+      position: fixed;
+      top: 24px;
+      right: 24px;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 2px solid #00bfff;
+      color: #00bfff;
+      background: rgba(0, 0, 0, 0.6);
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 12px #00bfff55;
+      transition: all 0.2s ease;
+      z-index: 999;
+    }
+    #helpBtn:hover {
+      background: #00bfff;
+      color: #000;
+      text-shadow: 0 0 10px #000;
     }
 
-    .section {
-      margin: 20px 0;
-      border-left: 3px solid #0ff;
-      padding-left: 15px;
+    /* Popup overlay */
+    #helpPopup {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: rgba(0,0,8,0.9);
+      backdrop-filter: blur(14px);
+      z-index: 1000;
     }
+    #helpPopup.open { display: flex; }
+
+    /* Popup box */
+    .popup-box {
+      background: #000;
+      border: 1px solid #00bfff55;
+      box-shadow: 0 0 40px #00bfff33;
+      padding: 24px 32px;
+      width: 90%;
+      max-width: 640px;
+      max-height: 80vh;
+      overflow-y: auto;
+      border-radius: 8px;
+      color: #b0e0e6;
+    }
+    .popup-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #00bfff55;
+      padding-bottom: 10px;
+      margin-bottom: 16px;
+    }
+    .popup-header h2 {
+      font-size: 18px;
+      color: #00ffff;
+      text-shadow: 0 0 8px #00bfff;
+    }
+    .popup-close {
+      background: none;
+      border: none;
+      color: #00bfff;
+      font-size: 20px;
+      cursor: pointer;
+      transition: color 0.2s;
+    }
+    .popup-close:hover { color: #fff; }
 
     details {
-      background-color: #0a0a0a;
-      border: 1px solid #00bfff;
+      margin-bottom: 10px;
+      border: 1px solid #00bfff33;
       border-radius: 5px;
-      margin: 10px 0;
-      box-shadow: 0 0 10px #00bfff50;
+      background: rgba(0,0,10,0.7);
+      box-shadow: 0 0 10px #00bfff25;
     }
-
     summary {
       cursor: pointer;
       color: #00ffff;
-      font-weight: bold;
       padding: 10px;
-      transition: 0.3s;
+      font-weight: bold;
+      text-shadow: 0 0 5px #00bfff;
     }
-
-    summary:hover {
-      color: #1e90ff;
-      text-shadow: 0 0 8px #1e90ff;
-    }
-
     .content {
-      padding: 10px 15px;
+      padding: 10px 16px;
       color: #b0e0e6;
+      border-top: 1px solid #00bfff33;
     }
-
-    .glow {
-      color: #00bfff;
-      text-shadow: 0 0 8px #00bfff, 0 0 12px #0ff;
-    }
-
-    .tag {
-      color: #ff69b4;
-    }
-    .var {
-      color: #7cff00;
-    }
-    .code {
-      color: #00bfff;
-    }
-
-    footer {
-      text-align: center;
-      border-top: 1px solid #00bfff;
-      margin-top: 40px;
-      padding-top: 10px;
-      color: #b0e0e6;
-      font-size: 0.9em;
-    }
+    ul { margin: 0; padding-left: 20px; }
+    li { margin-bottom: 6px; }
+    code { color: #7cff00; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1 class="glow">> TechRepair_Startup_Console</h1>
-    <p>// A roadmap to launch your tech repair business — built by <span class="tag">you</span>.</p>
 
-    <div class="section">
-      <h2>Foundations</h2>
-      
-      <details>
-        <summary>[1.1] Business Setup</summary>
+  <h1>Tech Repair Startup Console</h1>
+
+  <button id="helpBtn">?</button>
+
+  <div id="helpPopup">
+    <div class="popup-box">
+      <div class="popup-header">
+        <h2>Startup Blueprint</h2>
+        <button class="popup-close" id="closePopup">×</button>
+      </div>
+
+      <details open>
+        <summary>// Foundations</summary>
         <div class="content">
           <ul>
-            <li>Choose your structure: <span class="var">LLC</span>, <span class="var">Sole Proprietor</span>, or <span class="var">Corporation</span></li>
-            <li>Register your business name and domain (<span class="code">yourtechfix.com</span>)</li>
-            <li>Set up tax ID (EIN) and a business bank account</li>
-            <li>Apply for local permits or repair certifications</li>
+            <li><strong>Business Setup</strong>: register LLC, permits, EIN, banking.</li>
+            <li><strong>Equipment</strong>: soldering tools, diagnostic kits, clean workspace.</li>
+            <li><strong>Identity</strong>: business name, logo, theme (<code>glowMatrix</code> style).</li>
+            <li><strong>Pricing Model</strong>: hourly + parts or fixed tiers.</li>
           </ul>
         </div>
       </details>
 
       <details>
-        <summary>[1.2] Equipment + Tools</summary>
+        <summary>// Learning + Skill Growth</summary>
         <div class="content">
           <ul>
-            <li>Essential tools: soldering station, multimeter, anti-static mat</li>
-            <li>Specialized repair tools for phones, PCs, and consoles</li>
-            <li>Data recovery & backup drives</li>
+            <li><strong>Certifications</strong>: CompTIA A+, Apple Tech, iFixit courses.</li>
+            <li><strong>Practice</strong>: repair old devices → documentation habit.</li>
+            <li><strong>Learning Curve</strong>: diagnose faster, solder cleaner, manage logs.</li>
           </ul>
         </div>
       </details>
 
       <details>
-        <summary>[1.3] Branding + Identity</summary>
+        <summary>// CRM — Customers</summary>
         <div class="content">
           <ul>
-            <li>Logo and glow-themed branding</li>
-            <li>Create social profiles + Google Business page</li>
-            <li>Tagline example: <span class="code">"Fast. Honest. Expert Tech Revival."</span></li>
+            <li>Track builds and customer details using Airtable, Notion, or Firestore CRM.</li>
+            <li>Add service logs, warranty notes, and satisfaction metrics.</li>
+            <li>Email automation tools: MailerLite, HubSpot, or a Node backend later.</li>
           </ul>
         </div>
       </details>
+
+      <details>
+        <summary>// NET — Network and Contacts</summary>
+        <div class="content">
+          <ul>
+            <li>Local collabs: electronics shops, schools, small offices needing repair.</li>
+            <li>Online: Reddit repair communities, LinkedIn local tech circles.</li>
+            <li><strong>Vendors</strong>: find trusted wholesale suppliers for parts.</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>// Next Phases</summary>
+        <div class="content">
+          <ul>
+            <li>Build website dashboard for bookings, CRM, and quote tracking.</li>
+            <li>Expand into refurb devices resale.</li>
+            <li>Automate billing + invoicing (Stripe / PayPal API).</li>
+          </ul>
+        </div>
+      </details>
+
+      <details>
+        <summary>// System Notes</summary>
+        <div class="content">
+          <ul>
+            <li>Style: <code>dark neon matrix</code></li>
+            <li>Theme Version: 1.0 · <code>HUDscript.js</code></li>
+            <li>Contact: your future business email → <code>support@yourtechfix.com</code></li>
+          </ul>
+        </div>
+      </details>
+
     </div>
-
-    <div class="section">
-      <h2>Studying / Learning / Tips</h2>
-
-      <details>
-        <summary>[2.1] Learning & Certifications</summary>
-        <div class="content">
-          <ul>
-            <li>Enroll in <span class="var">CompTIA A+</span> or <span class="var">Apple Certified Technician</span> programs</li>
-            <li>Follow YouTube repair educators (Louis Rossmann, iFixit, etc.)</li>
-            <li>Study diagnostic software and hardware schematics</li>
-          </ul>
-        </div>
-      </details>
-
-      <details>
-        <summary>[2.2] Business Tips</summary>
-        <div class="content">
-          <ul>
-            <li>Build trust: transparent pricing, quick replies</li>
-            <li>Offer warranties (30–90 days)</li>
-            <li>Encourage Google reviews + social proof</li>
-          </ul>
-        </div>
-      </details>
-    </div>
-
-    <div class="section">
-      <h2>Customer Systems</h2>
-
-      <details>
-        <summary>[3.1] CRM (Customer Relations Management)</summary>
-        <div class="content">
-          <ul>
-            <li>Track repairs and customer history</li>
-            <li>Tools: HubSpot, Notion, or self-built database</li>
-            <li>Follow-up emails for customer retention</li>
-          </ul>
-        </div>
-      </details>
-
-      <details>
-        <summary>[3.2] NET (Networking & Contacts)</summary>
-        <div class="content">
-          <ul>
-            <li>Connect with local schools / IT pros / small businesses</li>
-            <li>Form supplier relationships for parts</li>
-            <li>Tech meetups and repair community groups</li>
-            <li>Email template example:
-              <pre>
-[SUBJECT]: Partnership Inquiry  
-Hello [Name],
-I run a local tech repair service specializing in fast, reliable device repairs.
-Would you be open to networking or referral collaboration?
-- [Your Name]
-              </pre>
-            </li>
-          </ul>
-        </div>
-      </details>
-    </div>
-
-    <footer>
-      <p>© 2026 TechRepair_Startup. Initialized with 💻 + ⚡</p>
-    </footer>
   </div>
 
   <script>
-    // Optional glow animation or startup effect
-    console.log(">> Site initialized successfully");
+    const helpBtn = document.getElementById('helpBtn');
+    const popup = document.getElementById('helpPopup');
+    const closePopup = document.getElementById('closePopup');
+
+    helpBtn.onclick = () => popup.classList.add('open');
+    closePopup.onclick = () => popup.classList.remove('open');
+    popup.onclick = e => { if (e.target === popup) popup.classList.remove('open'); };
   </script>
+
 </body>
 </html>
