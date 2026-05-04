@@ -13,10 +13,10 @@
 <script>
 const firebaseConfig = {
   apiKey: "AIzaSyBn3RhtO7-EN6w5urGlTBEipENbgOqrUto",
-  authDomain: "oasense-556ec.firebaseapp.com",
-  databaseURL: "https://oasense-556ec-default-rtdb.firebaseio.com",
-  projectId: "oasense-556ec",
-  storageBucket: "oasense-556ec.firebasestorage.app",
+  authDomain: "TECHSAVY-556ec.firebaseapp.com",
+  databaseURL: "https://TECHSAVY-556ec-default-rtdb.firebaseio.com",
+  projectId: "TECHSAVY-556ec",
+  storageBucket: "TECHSAVY-556ec.firebasestorage.app",
   messagingSenderId: "278957207508",
   appId: "1:278957207508:web:6b714063cd75a971f2b041",
   measurementId: "G-2Z3Q2XF1EQ"
@@ -903,7 +903,7 @@ body{
 <nav id="sidebar">
   <div class="sb-logo-wrap" onclick="openAccountModal()">
     <div class="sb-avatar" id="sbAvatar"><span id="sbAvatarEmoji">👤</span></div>
-    <div class="sb-logo-text">OASENSE<span id="sbUserLabel">// DEV PANEL</span></div>
+    <div class="sb-logo-text">TECHSAVY<span id="sbUserLabel">// DEV PANEL</span></div>
   </div>
   <div class="sb-section">Manage</div>
   <a class="sb-link active" onclick="showSection('bookings',this)"><span class="sb-icon">📅</span><span>Bookings</span></a>
@@ -1261,8 +1261,8 @@ body{
   </div>
   <div class="ai-prompt-section">
     <div class="ai-section-title">🤖 <span>Sol — Identity & Welcome</span></div>
-    <div class="fg"><label class="fl">Welcome Message</label><input class="fi" id="sol-welcome" value="Hey! I'm Sol, your OASENSE guide 🌟 — Ask me anything, make a booking, or explore the site!"/></div>
-    <div class="fg"><label class="fl">Rules / Personality Instructions</label><textarea class="fta" id="sol-rules" style="min-height:120px;">You are Sol, the AI assistant for OASENSE — an artistic creative studio by photographer and musician Angel Alvarez based in Las Vegas, NV.</textarea></div>
+    <div class="fg"><label class="fl">Welcome Message</label><input class="fi" id="sol-welcome" value="Hey! I'm Sol, your TECHSAVY guide 🌟 — Ask me anything, make a booking, or explore the site!"/></div>
+    <div class="fg"><label class="fl">Rules / Personality Instructions</label><textarea class="fta" id="sol-rules" style="min-height:120px;">You are Sol, the AI assistant for TECHSAVY — an artistic creative studio by photographer and musician Angel Alvarez based in Las Vegas, NV.</textarea></div>
   </div>
   <div class="ai-prompt-section">
     <div class="ai-section-title">⚡ <span>Sol — Commands Databank</span></div>
@@ -1602,8 +1602,8 @@ let solConfig={
   api_key:'',
   fallback_enabled:false,
   fallback_keywords:'',
-  welcome:"Welcome to OASENSE — I’m Sol, your creative guide. Tell me what you’re dreaming up and I’ll point you to the right place, fast.",
-  rules:"You are Sol, the AI companion for OASENSE — an artistic creative studio in Las Vegas.\nGuidance:\n- Be warm, confident, and cinematic in tone.\n- Ask one helpful clarifying question when the user is vague.\n- Give short, high-signal answers first, then offer a button to go deeper.\n- When the user mentions booking, scheduling, photoshoots, or appointments, show a clear booking button.\n- When they mention contacting, support, or speaking with someone, show a “Take me there” scroll button.\n- When they mention Instagram, show an “Instagram” button.\n- Never use hashtags (#) in command targets.\n- Keep it on-brand, concise, and reassuring.",
+  welcome:"Welcome to TECHSAVY — I’m Sol, your creative guide. Tell me what you’re dreaming up and I’ll point you to the right place, fast.",
+  rules:"You are Sol, the AI companion for TECHSAVY — an artistic creative studio in Las Vegas.\nGuidance:\n- Be warm, confident, and cinematic in tone.\n- Ask one helpful clarifying question when the user is vague.\n- Give short, high-signal answers first, then offer a button to go deeper.\n- When the user mentions booking, scheduling, photoshoots, or appointments, show a clear booking button.\n- When they mention contacting, support, or speaking with someone, show a “Take me there” scroll button.\n- When they mention Instagram, show an “Instagram” button.\n- Never use hashtags (#) in command targets.\n- Keep it on-brand, concise, and reassuring.",
   commands:[
     {id:1,label:'Make an Appointment',type:'link',value:'https://merci-chi.github.io/OAS/'},
     {id:2,label:'Instagram',type:'link',value:'https://instagram.com/'},
@@ -1611,14 +1611,14 @@ let solConfig={
     {id:4,label:'View Portfolio',type:'scroll',value:'portfolio'},
     {id:5,label:'Open Shop',type:'link',value:'https://merci-chi.github.io/OAS/shop'}
   ],
-  userPrompts:['BOOK A PHOTOSHOOT','CONTACT OASENSE','VIEW PORTFOLIO','OPEN SHOP','SEE PRICING']
+  userPrompts:['BOOK A PHOTOSHOOT','CONTACT TECHSAVY','VIEW PORTFOLIO','OPEN SHOP','SEE PRICING']
 };
 let rewardsConfig={
   earn:[
     {label:'Per $1 spent in the shop',points:10,status:'live'},
     {label:'Leave a product review',points:50,status:'live'},
     {label:'Subscribe to newsletter',points:100,status:'live'},
-    {label:'Share with #Oasense',points:200,status:'live'},
+    {label:'Share with #TECHSAVY',points:200,status:'live'},
     {label:'Like a blog post',points:5,status:'live'},
     {label:'Refer a friend',points:150,status:'live'},
     {label:'Birthday bonus',points:500,status:'live'},
@@ -2133,7 +2133,7 @@ function fmtPhone(inp){const raw=(inp.value||'').replace(/\D/g,'');let d=raw,pre
 function fmtIG(inp){const stripped=(inp.value||'').replace(/@/g,'').trim();const newVal=stripped?'@'+stripped:'';if(inp.value!==newVal)inp.value=newVal;}
 function fmtReceiptInput(){const t=document.getElementById('inv-receipt-type').value;const inp=document.getElementById('inv-receipt-val');if(t==='text')fmtPhone(inp);}
 const addrDebounce={};
-function addrSearch(inp,ddId){const q=(inp.value||'').trim();const dd=document.getElementById(ddId);if(!dd)return;clearTimeout(addrDebounce[ddId]);if(q.length<3){dd.classList.remove('open');dd.innerHTML='';return;}addrDebounce[ddId]=setTimeout(()=>{fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=6&q=${encodeURIComponent(q)}&countrycodes=us`,{headers:{'Accept-Language':'en-US','User-Agent':'OasenseDevPanel/1.0'}}).then(r=>r.ok?r.json():Promise.reject()).then(results=>{if(!results||!results.length){dd.classList.remove('open');return;}dd.innerHTML=results.map(r=>{const parts=(r.display_name||'').split(',');const main=parts[0].trim();const sub=parts.slice(1,4).join(', ').trim();const safe=r.display_name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");return`<div class="addr-opt" onclick="selectAddr('${inp.id}','${ddId}','${safe}')"><div class="addr-main">${main}</div><div class="addr-sub">${sub}</div></div>`;}).join('');dd.classList.add('open');}).catch(()=>dd.classList.remove('open'));},500);}
+function addrSearch(inp,ddId){const q=(inp.value||'').trim();const dd=document.getElementById(ddId);if(!dd)return;clearTimeout(addrDebounce[ddId]);if(q.length<3){dd.classList.remove('open');dd.innerHTML='';return;}addrDebounce[ddId]=setTimeout(()=>{fetch(`https://nominatim.openstreetmap.org/search?format=json&limit=6&q=${encodeURIComponent(q)}&countrycodes=us`,{headers:{'Accept-Language':'en-US','User-Agent':'TECHSAVYDevPanel/1.0'}}).then(r=>r.ok?r.json():Promise.reject()).then(results=>{if(!results||!results.length){dd.classList.remove('open');return;}dd.innerHTML=results.map(r=>{const parts=(r.display_name||'').split(',');const main=parts[0].trim();const sub=parts.slice(1,4).join(', ').trim();const safe=r.display_name.replace(/\\/g,'\\\\').replace(/'/g,"\\'");return`<div class="addr-opt" onclick="selectAddr('${inp.id}','${ddId}','${safe}')"><div class="addr-main">${main}</div><div class="addr-sub">${sub}</div></div>`;}).join('');dd.classList.add('open');}).catch(()=>dd.classList.remove('open'));},500);}
 function selectAddr(inpId,ddId,val){const inp=document.getElementById(inpId);if(inp)inp.value=val;const dd=document.getElementById(ddId);if(dd)dd.classList.remove('open');}
 
 function buildTimePicker(inp){const dd=document.getElementById('timePickerDrop');dd.innerHTML='';for(let h=0;h<24;h++){for(let m=0;m<60;m+=15){const label=fmtTimeVal(h,m);const opt=document.createElement('div');opt.style.cssText='padding:10px 14px;cursor:pointer;font-family:Barlow Condensed,sans-serif;font-size:15px;color:var(--txt);border-bottom:1px solid rgba(255,204,0,0.06);transition:background .1s;';opt.textContent=label;opt.onmouseenter=function(){this.style.background='rgba(255,204,0,0.08)';};opt.onmouseleave=function(){this.style.background='';};opt.onclick=function(){inp.value=label;dd.style.display='none';inp._val24=String(h).padStart(2,'0')+':'+String(m).padStart(2,'0');};dd.appendChild(opt);}}}
@@ -2450,7 +2450,7 @@ async function callGroq(prompt,maxTokens=300){
     body: JSON.stringify({
       model: 'llama-3.1-8b-instant',
       messages: [
-        {role:'system',content:(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for OASENSE.'},
+        {role:'system',content:(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for TECHSAVY.'},
         {role:'user',content:prompt}
       ],
       max_tokens: maxTokens
@@ -2465,7 +2465,7 @@ async function callSolAI(prompt,maxTokens=300){
   if(solConfig && solConfig.api_enabled && solConfig.api_url){
     const body={
       model: solConfig.api_model || '@cf/meta/llama-3.1-8b-instruct',
-      system: solConfig.rules || 'You are Sol, the AI assistant for OASENSE.',
+      system: solConfig.rules || 'You are Sol, the AI assistant for TECHSAVY.',
       messages:[{role:'user',content:prompt}],
       max_tokens: maxTokens
     };
@@ -2498,7 +2498,7 @@ async function runAIEnhance(){
   openAIPopup('Sol — Enhanced Description', title);
   document.getElementById('aiPopupContent').textContent='';setAIPopupLoading(true);
   try{
-    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for OASENSE.';
+    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for TECHSAVY.';
     const prompt=existing?`${solRules}\n\nRewrite and dramatically enhance this product description for "${title}". Make it evocative, poetic, and sensory — 2-4 sentences, no clichés, no em-dashes. Avoid brackets () [] in output. Original: "${existing}"`:`${solRules}\n\nWrite a rich, evocative product description for "${title}". 2-4 sentences. Make it feel alive, sensory, and aspirational. No em-dashes. Avoid brackets () [] in output.`;
     const text=await callSolAI(prompt,300);
     if(text){_aiPopupText=sanitizeDescText(text);document.getElementById('aiPopupContent').textContent=_aiPopupText;}else{document.getElementById('aiPopupContent').textContent='No response generated. Try again.';}
@@ -2522,7 +2522,7 @@ async function runAIItemTitleEnhance(){
   const title=document.getElementById('it-title').value.trim();
   document.getElementById('aiPopupContent').textContent='';setAIPopupLoading(true);
   try{
-    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for OASENSE.';
+    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for TECHSAVY.';
     const prompt=`${solRules}
 
 Enhance (do not replace) this product title. Keep the core words and meaning, just polish it so it sounds like a real product title.
@@ -2946,7 +2946,7 @@ async function enhanceBlogTitleAI(){
   openAIPopup('Sol — Blog Title', title);
   document.getElementById('aiPopupContent').textContent='';setAIPopupLoading(true);
   try{
-    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for OASENSE.';
+    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for TECHSAVY.';
     const prompt=`${solRules}
 
 Improve this blog title to be punchy and intriguing (max 8 words). Return only the title. Title: "${title}"`;
@@ -2967,7 +2967,7 @@ async function runAIBlogEnhance(){
   openAIPopup('Sol — Blog Draft', title);
   document.getElementById('aiPopupContent').textContent='';setAIPopupLoading(true);
   try{
-    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for OASENSE.';
+    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for TECHSAVY.';
     const prompt = body
       ? `${solRules}\n\nRewrite and enhance this blog post titled "${title}". Keep 3–6 short paragraphs. Make it vivid, but not cringe. Original:\n\n${body}`
       : `${solRules}\n\nWrite a 3–6 paragraph blog post titled "${title}" for a creative studio in Las Vegas.`;
@@ -3328,8 +3328,8 @@ async function enhanceNewsletterAI(){
   openAIPopup('Sol — Newsletter Draft', subject||'Newsletter');
   document.getElementById('aiPopupContent').textContent='';setAIPopupLoading(true);
   try{
-    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for OASENSE.';
-    const prompt=`${solRules}\n\nWrite a compelling email newsletter for OASENSE.\nSubject: ${subject||'(create one)'}\nBody draft: ${content||'(create a full email)'}\nReturn the subject on the first line starting with \"Subject:\" and the email body after.`;
+    const solRules=(solConfig&&solConfig.rules)?solConfig.rules:'You are Sol, the AI assistant for TECHSAVY.';
+    const prompt=`${solRules}\n\nWrite a compelling email newsletter for TECHSAVY.\nSubject: ${subject||'(create one)'}\nBody draft: ${content||'(create a full email)'}\nReturn the subject on the first line starting with \"Subject:\" and the email body after.`;
     const text=await callSolAI(prompt,600);
     if(text){_aiPopupText=text;document.getElementById('aiPopupContent').textContent=text;const lines=text.split('\\n');const subjLine=lines.find(l=>l.toLowerCase().startsWith('subject:'));if(subjLine){document.getElementById('nl-subject').value=subjLine.replace(/subject:\\s*/i,'').trim();}const body=text.replace(/^Subject:.*\\n?/i,'').trim();if(body)document.getElementById('nl-content').value=body;}
     else{document.getElementById('aiPopupContent').textContent='No response generated. Try again.';}
@@ -4142,7 +4142,7 @@ function exportMonthLog(){
   const d    = new Date(_auditViewMonth.start);
   const label = d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0');
   a.href = url;
-  a.download = `oasense-audit-${label}.json`;
+  a.download = `TECHSAVY-audit-${label}.json`;
   a.click();
   URL.revokeObjectURL(url);
 }
